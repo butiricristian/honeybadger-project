@@ -1,9 +1,6 @@
 class NotificationsController < ActionController::API
   class MissingFieldsInBodyError < StandardError; end
 
-  SPAM_TYPES = ['SpamNotification'].freeze
-  SPAM_TYPE_CODES = [512].freeze
-
   def check_spam
     validate_notification
   rescue ActionController::ParameterMissing => e
