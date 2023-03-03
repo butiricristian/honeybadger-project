@@ -3,4 +3,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+  scope "/api/v1" do
+    post 'notifications/check-spam', to: 'notifications#check_spam'
+  end
 end
