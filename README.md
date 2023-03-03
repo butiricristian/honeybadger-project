@@ -2,6 +2,8 @@
 
 This is a demo project created for applying for a Software Engineer position at Honeybadger
 
+To run the tests: `bundle exec rspec`
+
 To run the project you just have to start the server: `rails s`
 The you can make a post request with Postman or any similar tool with the following details:
 - url: localhost:3000/api/v1/notifications/check-spam
