@@ -2,6 +2,12 @@ require 'rails_helper'
 
 RSpec.describe 'Notifications', type: :request do
   describe 'POST /notifications/check-spam' do
+    # Mock Slack web client instance
+    let(:slack_client) { instance_double(Slack::Web::Client, chat_postMessage: true) }
+    before(:each) do
+      allow(Slack::Web::Client).to receive(:new).and_return(slack_client)
+    end
+
     context 'successful' do
       context 'with spam notification' do
         let(:notification) do
@@ -22,6 +28,11 @@ RSpec.describe 'Notifications', type: :request do
         it 'should return success' do
           post notifications_check_spam_path, params: { notification:, format: :json }
           expect(response).to have_http_status(200)
+        end
+
+        it 'should call the slack client' do
+          expect(slack_client).to receive(:chat_postMessage)
+          post notifications_check_spam_path, params: { notification:, format: :json }
         end
       end
 
@@ -44,6 +55,11 @@ RSpec.describe 'Notifications', type: :request do
         it 'should return success' do
           post notifications_check_spam_path, params: { notification:, format: :json }
           expect(response).to have_http_status(200)
+        end
+
+        it 'should not call the slack client' do
+          expect(slack_client).not_to receive(:chat_postMessage)
+          post notifications_check_spam_path, params: { notification:, format: :json }
         end
       end
     end
