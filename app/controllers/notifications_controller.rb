@@ -5,9 +5,9 @@ class NotificationsController < ActionController::API
     validate_notification
     send_slack_message if is_spam_notification
   rescue ActionController::ParameterMissing => e
-    render json: { message: "Some parameters are missing: #{e.full_message}" }, status: :bad_request
+    render json: { message: "Some parameters are missing: #{e.message}" }, status: :bad_request
   rescue MissingFieldsInBodyError => e
-    render json: { message: "Some fields are missing: #{e.full_message}" }, status: :bad_request
+    render json: { message: "Some fields are missing: #{e.message}" }, status: :bad_request
   end
 
   private
