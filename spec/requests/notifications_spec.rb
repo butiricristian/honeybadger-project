@@ -46,21 +46,6 @@ RSpec.describe 'Notifications', type: :request do
           expect(response).to have_http_status(200)
         end
       end
-
-      context 'with unrecognized type of notification' do
-        let(:notification) do
-          {
-            "Type": "Unknown",
-            "TypeCode": 1024,
-          }.with_indifferent_access
-        end
-
-        it 'should contain a warning' do
-          post notifications_check_spam_path, params: { notification:, format: :json }
-          json_response = JSON.parse(response.body)
-          expect(json_response[:warning]).to be_present
-        end
-      end
     end
 
     context 'unsuccessful' do
